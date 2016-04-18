@@ -13,23 +13,6 @@ var cfenv = require('cfenv');
 // create a new express server
 var app = express();
 
-// Set path to Jade template directory
-app.set('views', __dirname + '/views');
-
-// Set path to JavaScript files
-app.set('js', __dirname + '/js');
-
-// Set path to CSS files
-app.set('css', __dirname + '/css');
-
-// Set path to image files
-app.set('images', __dirname + '/images');
-
-// Set path to sound files
-app.set('sounds', __dirname + '/sounds');
-
-
-
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/views'));
