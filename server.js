@@ -9,6 +9,18 @@ var http = require('http');
 var host = "localhost";
 var port = 3030;
 
+var cloudant = {
+	url : "<url>" //todo
+};
+if (process.env.hasOwnProperty("VCAP_SERVICES")) {
+	var env = JSON.parse(proces.env.VCAP_SERVICES);
+	var host = process.env.VCAP_APP_HOST;
+	var port = process.env.VCAP_APP_PORT;
+
+	cloudant = env['cloudantNoSQLDB'][0].credentials;
+}
+var nano = require('nano')(cloudant.url);
+var db = nano.db.use('categories_with_friends_hiscores');
 // Set path to Jade template directory
 app.set('views', __dirname + '/views');
 
