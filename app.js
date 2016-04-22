@@ -21,17 +21,52 @@ var app = express();
 app.use(express.static(__dirname + '/views'));
 
 
+//Database setup
+ var db = null;
+        console.log("What just ");
+     if (process.env.VCAP_SERVICES) {
+       var services = JSON.parse(process.env.VCAP_SERVICES);
+       console.log("What just ");
+//       for (var svcName in services) {
+//         if (svcName.match(/^cleardb/)) {
+//            var mysqlCreds = services[svcName][0]['credentials'];
+//         db = mysql.createPool({
+//         host: mysqlCreds.host,
+//             port: mysqlCreds.port,
+//             user: mysqlCreds.user,
+//             password: mysqlCreds.password,
+//             database: mysqlCreds.name
+//                 });
+//         }
+//      } 
+    }
+//   db = mysql.createConnection({
+//     host: mysqlCreds.hostname,  // not host
+//     port: mysqlCreds.port,
+//     user: mysqlCreds.username,  // not user
+//     password: mysqlCreds.password,
+//     database: mysqlCreds.name,
+//   });    
+    
+
+
+
 
 //this is the 
 app.get('/', function(req, res){
   res.render('hiscores.jade', {title: 'Hiscores'});
-  res.send('HI there');
+ // res.send('HI there');
 });
 
 //this is where will retrieve the db data
 app.get('/hi', function(req, res) {
 	//res.render('hiscores.jade', {title: 'scores'});
 	res.send('HI there');
+	
+	//db 
+	db.connect();
+	
+	
 });
 
 //ths i 
