@@ -64,12 +64,12 @@ app.get('/save_score', function(request, response) {
   });
 });
 //end of new code and database code
-
+*/
 
 app.get('/', function(req, res){
   res.render('hiscores.jade', {title: 'Hiscores'});
 });
-*/
+
 app.get('/play', function(req, res){	
   res.render('main.jade', {title: 'Guess the Word'});
 });
