@@ -29,13 +29,13 @@ var cloudant = {
 
 
 if (process.env.hasOwnProperty("VCAP_SERVICES")) {
-	var env = JSON.parse(proces.env.VCAP_SERVICES);
+	var env = JSON.parse(process.env.VCAP_SERVICES);
 	var host = process.env.VCAP_APP_HOST;
 	var port = process.env.VCAP_APP_PORT;
 
 	cloudant = env['cloudantNoSQLDB'][0].credentials;
 }
-/*
+
 var nano = require('nano')(cloudant.url);
 var db = nano.db.use('categories_with_friends_hiscores');
 
@@ -66,7 +66,7 @@ app.get('/save_score', function(request, response) {
   });
 });
 //end of new code and database code
-*/
+
 
 app.get('/', function(req, res){
   res.render('hiscores.jade', {title: 'Hiscores'});
@@ -77,7 +77,7 @@ app.get('/play', function(req, res){
 });
 
 // start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function() {
+app.listen(port, '0.0.0.0', function() {
 	// print a message when the server starts listening
   console.log("server starting on " + appEnv.url);
 });
