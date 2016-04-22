@@ -27,7 +27,7 @@ var cloudant = {
 	url : "https://04fea742-a58c-4952-9d62-e7a493b49f95-bluemix:018fdcefebbdb083c91e3dad0ba1ae8812da71cba1225d63555e200efb61cce4@04fea742-a58c-4952-9d62-e7a493b49f95-bluemix.cloudant.com"
 };
 
-/*
+
 if (process.env.hasOwnProperty("VCAP_SERVICES")) {
 	var env = JSON.parse(proces.env.VCAP_SERVICES);
 	var host = process.env.VCAP_APP_HOST;
@@ -35,6 +35,7 @@ if (process.env.hasOwnProperty("VCAP_SERVICES")) {
 
 	cloudant = env['cloudantNoSQLDB'][0].credentials;
 }
+/*
 var nano = require('nano')(cloudant.url);
 var db = nano.db.use('categories_with_friends_hiscores');
 
