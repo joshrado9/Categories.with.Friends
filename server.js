@@ -10,7 +10,7 @@ var host = "localhost";
 var port = 3030;
 
 var cloudant = {
-	url : "<url>" //todo
+	url : "https://04fea742-a58c-4952-9d62-e7a493b49f95-bluemix.cloudant.com/categories_with_friends_hiscores/_all_docs" 
 };
 if (process.env.hasOwnProperty("VCAP_SERVICES")) {
 	var env = JSON.parse(proces.env.VCAP_SERVICES);
