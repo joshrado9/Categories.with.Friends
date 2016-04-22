@@ -23,7 +23,8 @@ var appEnv = cfenv.getAppEnv();
 
 //adding database stuff
 var cloudant = {
-	url : "https://04fea742-a58c-4952-9d62-e7a493b49f95-bluemix.cloudant.com/categories_with_friends_hiscores/_all_docs" //todo
+	//url : "https://04fea742-a58c-4952-9d62-e7a493b49f95-bluemix.cloudant.com/categories_with_friends_hiscores/_all_docs" //todo
+	url : "https://04fea742-a58c-4952-9d62-e7a493b49f95-bluemix:018fdcefebbdb083c91e3dad0ba1ae8812da71cba1225d63555e200efb61cce4@04fea742-a58c-4952-9d62-e7a493b49f95-bluemix.cloudant.com"
 };
 if (process.env.hasOwnProperty("VCAP_SERVICES")) {
 	var env = JSON.parse(proces.env.VCAP_SERVICES);
