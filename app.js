@@ -20,6 +20,50 @@ app.use(express.static(__dirname + '/views'));
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
+
+//adding database stuff
+var cloudant = {
+	url : "https://04fea742-a58c-4952-9d62-e7a493b49f95-bluemix.cloudant.com/categories_with_friends_hiscores/_all_docs" //todo
+};
+if (process.env.hasOwnProperty("VCAP_SERVICES")) {
+	var env = JSON.parse(proces.env.VCAP_SERVICES);
+	var host = process.env.VCAP_APP_HOST;
+	var port = process.env.VCAP_APP_PORT;
+
+	cloudant = env['cloudantNoSQLDB'][0].credentials;
+}
+var nano = require('nano')(cloudant.url);
+var db = nano.db.use('categories_with_friends_hiscores');
+
+//new code added
+app.get('/hiscores', function(request, response) {
+  db.view('top_scores', 'top_scores_index', function(err, body) {
+  if (!err) {
+    var scores = [];
+      body.rows.forEach(function(doc) {
+        scores.push(doc.value);		      
+      });
+      response.send(JSON.stringify(scores));
+    } else {
+    	response.send("I'm a failure");
+    }
+  });
+});
+
+app.get('/save_score', function(request, response) {
+  var name = request.query.name;
+  var score = request.query.score;
+
+  var scoreRecord = { 'name': name, 'score' : parseInt(score), 'date': new Date() };
+  db.insert(scoreRecord, function(err, body, header) {
+    if (!err) {       
+      response.send('Successfully added one score to the DB');
+    }
+  });
+});
+//end of new code and database code
+
+
 app.get('/', function(req, res){
   res.render('hiscores.jade', {title: 'Hiscores'});
 });
