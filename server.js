@@ -59,6 +59,8 @@ app.get('/hiscores', function(request, response) {
         scores.push(doc.value);		      
       });
       response.send(JSON.stringify(scores));
+    } else {
+    	response.send("I'm a failure");
     }
   });
 });
