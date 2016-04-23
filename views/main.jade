@@ -7,7 +7,7 @@ html(lang="en")
   body(style="background-color:orange")
 
     div(class="container")
-      h1(class="game-text") Guess the secret word!
+      h1(class="game-text") Categpries with Friends!
       div(class="row")
         div(class="col-xs-8")
           div(id="word-description")        
@@ -23,38 +23,19 @@ html(lang="en")
           div(id="power") Power:            
       div(class="row")
         div(class="col-xs-8")
-          div(id="help-text", class="game-text") Click on a ?-box above and type a letter          
+          div(id="help-text", class="game-text") Enter the answers to the Categories       
         div(class="col-xs-4")
           div(class="row")
             div(class="col-xs-12")
               button(id="skip-button" class="btn btn-info btn-xs") Skip this word
             div(class="col-xs-12")
-              button(id="help-letter-button" class="btn btn-info btn-xs") Give me a letter
+              button(id="help-letter-button" class="btn btn-info btn-xs" onclick="submit()") Submit
        
-       table(class="word-area", align="left")
-          th() category 1 
-            input(type="text", size="30")
-            tr() 
-          th() category 2 
-            input(type="text", size="30")
-            tr()
-          th() category 3 
-            input(type="text", size="30")
-            tr()
-          th() category 4 
-            input(type="text", size="30")
-            tr()
-          th() category 5 
-            input(type="text", size="30")
-            tr()
-          th() category 6 
-            input(type="text", size="30")
-            tr()              
+       form(action="https://categories-with-friends.mybluemix.net/check" method="POST")
+         div() Category
+           input(type="text" size="30")
+         input(type="submit" value="Submit")
           
-    
-    audio(id="tick-sound", src="sounds/Tick.mp3")
-    audio(id="skip-sound", src="sounds/Falcon.mp3")
-    audio(id="applause-sound", src="sounds/Applause.mp3")
       
     script(src="js/jquery.js", type="text/javascript")
     script(src="js/bootstrap.js", type="text/javascript")
