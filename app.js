@@ -22,36 +22,36 @@ var app = express();
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
 
-
+/*
 //Database setup
  var db = null;
 
 
-//     if (process.env.VCAP_SERVICES) {
-//       var services = JSON.parse(process.env.VCAP_SERVICES);
-//       console.time('fuck');
-//       for (var svcName in services) {
-//         if (svcName.match(/^cleardb/)) {
-//            var mysqlCreds = services[svcName][0]['credentials'];
-//       	  db = mysql.createPool({
-//         		host: mysqlCreds.hostname,
-//            	port: mysqlCreds.port,
-//                user: mysqlCreds.username,
-//                password: mysqlCreds.password,
-//                database: mysqlCreds.name
-//                	  });
-//        }
-//      } 
-//      console.timeEnd('fuck');
-//    }
-//   db = mysql.createConnection({
-//     host: mysqlCreds.hostname,  // not host
-//     port: mysqlCreds.port,
-//     user: mysqlCreds.username,  // not user
-//     password: mysqlCreds.password,
-//     database: mysqlCreds.name,
-//   });    
-    
+     if (process.env.VCAP_SERVICES) {
+       var services = JSON.parse(process.env.VCAP_SERVICES);
+       console.time('fuck');
+       for (var svcName in services) {
+         if (svcName.match(/^cleardb/)) {
+            var mysqlCreds = services[svcName][0]['credentials'];
+       	  db = mysql.createPool({
+         		host: mysqlCreds.hostname,
+            	port: mysqlCreds.port,
+                user: mysqlCreds.username,
+                password: mysqlCreds.password,
+                database: mysqlCreds.name
+                	  });
+        }
+      } 
+      console.timeEnd('fuck');
+    }
+   db = mysql.createConnection({
+     host: mysqlCreds.hostname,  // not host
+     port: mysqlCreds.port,
+     user: mysqlCreds.username,  // not user
+     password: mysqlCreds.password,
+     database: mysqlCreds.name,
+   });    
+  */  
 
 
 
