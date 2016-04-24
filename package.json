@@ -9,7 +9,7 @@
 		"express": "4.13.x",
 		"cfenv": "1.0.x",
 		"jade": ">=1.1.4",
-		"mysql": "*"
+		"mysql": "^2.5.4"
 	},
 	"repository": {},
 	"engines": {

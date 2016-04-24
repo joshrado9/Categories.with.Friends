@@ -8,6 +8,7 @@
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
+
 var cfenv = require('cfenv');
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
@@ -22,39 +23,30 @@ var app = express();
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
 
-/*
 //Database setup
- var db = null;
+var db = null;
 
+var mysql = require('mysql');
+db = mysql.createConnection(
+{
+	host: 'us-cdbr-iron-east-03.cleardb.net',
+	port: '3306',
+	user: 'b949f5a82f36fb',
+	password: '3b81693c',
+	database: 'ad_3063a2f467afe38'
+});
 
-     if (process.env.VCAP_SERVICES) {
-       var services = JSON.parse(process.env.VCAP_SERVICES);
-       console.time('fuck');
-       for (var svcName in services) {
-         if (svcName.match(/^cleardb/)) {
-            var mysqlCreds = services[svcName][0]['credentials'];
-       	  db = mysql.createPool({
-         		host: mysqlCreds.hostname,
-            	port: mysqlCreds.port,
-                user: mysqlCreds.username,
-                password: mysqlCreds.password,
-                database: mysqlCreds.name
-                	  });
-        }
-      } 
-      console.timeEnd('fuck');
-    }
-   db = mysql.createConnection({
-     host: mysqlCreds.hostname,  // not host
-     port: mysqlCreds.port,
-     user: mysqlCreds.username,  // not user
-     password: mysqlCreds.password,
-     database: mysqlCreds.name,
-   });    
-  */  
-
-
-
+db.connect(function(err)
+{
+	if (!err)
+	{
+		console.log("Database is connected!");
+	}
+	else 
+	{
+		console.log("Error connecting to database!");
+	}
+});
 
 //this is the 
 app.get('/', function(req, res){
@@ -94,7 +86,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 });
 console.log('What just');
 
-
+db.end();
 
 
 
