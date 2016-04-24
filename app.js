@@ -34,9 +34,16 @@ db = mysql.createConnection(
 	database: 'ad_3063a2f467afe38'
 });
 
-db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
+var high = 2;
+var low = 1;
+
+var cat = Math.floor(Math.random() * (high - low) + low);
+
+db.query('SELECT name FROM categories WHERE id = ' + cat, function(err, rows)
 {
 	if (err) throw err;
+	
+	console.log(cat);
 	console.log('Data received from Db:\n');
 	console.log(rows);
 });
