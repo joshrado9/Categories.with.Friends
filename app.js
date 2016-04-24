@@ -36,16 +36,12 @@ db = mysql.createConnection(
 	database: 'ad_3063a2f467afe38'
 });
 
-db.connect(function(err)
+db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
 {
-	if (!err)
-	{
-		console.log("Database is connected!");
-	}
-	else 
-	{
-		console.log("Error connecting to database!");
-	}
+	if (err) throw err;
+	
+	console.log('Data received from Db:\n');
+	console.log(rows);
 });
 
 //this is the 
