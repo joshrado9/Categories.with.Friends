@@ -5,33 +5,51 @@ function submit() {
 	var thing = document.getElementById("one").value;
 	document.getElementById("five").value = thing;
 }
+
+var vari;
 function checkTime() {
+
 	var d = new Date();
-	var currTime = d.getMilliseconds();
-	document.getElementById("score").innnerHTML = d.toLocaleTimeString();
-	
+	var value = 0;
+	console.log("Ti");
+	vari = setInterval(changeTime, 1000, value);
+	//clearInterval(vari);
+
 }
+var time = 0;
+function changeTime(value) {
+	
+   console.log("Time Diff"+  time);
+   //format correctly
+   	 
+   
+   //update UI
+   document.getElementById("timer").value = time;
+   time++;
+   if(time == 121) {
+   		clearInterval(vari);
+   		
+   }
+
+}
+
 
 function start() {
 	//hide the button and the title
 	document.getElementById("ready").style.display = "none";
 	document.getElementById("cate").style.display = "none";
 
-	document.getElementById("score").style.display = "block";
+	//document.getElementById("score").style.display = "block";
 
 	
 	//display the relevent things
-	//$("#score").fadeIn();
-	//$("#power").fadeIn();
-	//$("#inputting").fadeIn();
+	$("#score").fadeIn();
+	$("#power").fadeIn();
+	$("#inputting").fadeIn();
 	
 	
-		
-	var inner = document.getElementById("score");
-	var d = new Date();
-	inner.innnerHTML = d.toLocaleTimeString();	
-	
-	console.log(d.toLocaleTimeString()+" "+ document.getElementById("score").innnerHTML);
+//	console.log(d.toLocaleTimeString()+" "+ document.getElementById("score").innnerHTML);
+	setTimeout(checkTime, 1000);
 
 
 }

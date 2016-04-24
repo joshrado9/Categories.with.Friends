@@ -18,8 +18,6 @@ var express = require('express');
 var app = express();
 
 
-
-
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
 
@@ -39,7 +37,6 @@ db = mysql.createConnection(
 db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
 {
 	if (err) throw err;
-	
 	console.log('Data received from Db:\n');
 	console.log(rows);
 });
