@@ -17,6 +17,10 @@ var express = require('express');
 // create a new express server
 var app = express();
 
+//body parser that was recommended to use
+//var bodyParser = require('body-parser');
+//app.use(bodyParser.urlencoded({extended: true}));
+
 //Database setup
 var db = null;
 
@@ -36,20 +40,28 @@ app.get('/', function(req, res){
 });
 
 //this is where will retrieve the db data
-app.post('/check', function(req, res) {
-	//res.render('hiscores.jade', {title: 'scores'});
-	res.send('This is the Check page');
+app.get('/check', function(req, res) {
+	
+	console.log("Body of req "+req.query.one);
+	
+	//concat the data
+	var sends = req.query.one +"|"+req.query.two+"|"+req.query.three+"|"+req.query.four+"|"+req.query.five;
+	sends = sends.split("|");
+	
+	//send a full string
+	res.render('client.jade', {answer: sends});
+	
 	
 });
 
-//this is where will retrieve the db data
+//this is where will send the db data
 app.get('/hi', function(req, res) {
 	//res.render('hiscores.jade', {title: 'scores'});
 	res.send('HI there');
 	
 });
 
-//ths i 
+//this is where the meat is 
 app.get('/play', function(req, res){	
 
 db = mysql.createConnection(

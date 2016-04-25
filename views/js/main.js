@@ -11,7 +11,6 @@ function submit() {
 var vari;
 function checkTime() {
 
-	var d = new Date();
 	var value = 0;
 	console.log("Ti");
 	
@@ -25,7 +24,7 @@ function checkTime() {
 
 function changeTime(value) {
 	
-   console.log("Time Diff"+  time);
+   console.log("Time Diff "+  time);
    //format correctly
    var min =Math.floor(time/60);
    var sec = time%60;
@@ -36,11 +35,16 @@ function changeTime(value) {
    //update UI
    document.getElementById("timer").value = min+":"+sec;
    time--;
-   if(time == ) {
+   if(time === -1) {
    		clearInterval(vari);
    		alert('Time is up! ');
    		//switch pages now!!  
-   		window.location.href = "http://stackoverflow.com";
+   		
+   		//hyper reference test
+   		//window.location.href = "\check";
+
+		//this sends the data to server, and submits
+   		document.getElementById("inputting").submit();
 
    }
 
