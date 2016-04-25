@@ -35,6 +35,9 @@ db = mysql.createConnection(
 	database: 'ad_3063a2f467afe38'
 });
 
+db.connect();
+
+
 
 //this is the 
 app.get('/', function(req, res){
