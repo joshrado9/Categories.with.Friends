@@ -26,6 +26,15 @@ var db = null;
 
 var mysql = require('mysql');
 
+db = mysql.createConnection(
+{
+	host: 'us-cdbr-iron-east-03.cleardb.net',
+	port: '3306',
+	user: 'b949f5a82f36fb',
+	password: '3b81693c',
+	database: 'ad_3063a2f467afe38'
+});
+
 
 //this is the 
 app.get('/', function(req, res){
@@ -79,7 +88,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 });
 console.log('What just');
 
-//db.end();
+db.end();
 
 
 
