@@ -16,6 +16,7 @@ function checkTime() {
 	clearTimeout(branch);
 	
 	vari = setInterval(changeTime, 1000, value);
+
 	//clearInterval(vari);
 
 }
