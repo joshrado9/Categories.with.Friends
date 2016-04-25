@@ -54,6 +54,7 @@ app.get('/', function(req, res){
 		console.log('Data received from Db:\n');
 		console.log(rows);
 	});
+	db.end();
 
   	res.render('hiscores.jade', {title: 'Hiscores'});
   	console.log('What even');
@@ -91,7 +92,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 });
 console.log('What just');
 
-db.end();
+
 
 
 
