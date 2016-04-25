@@ -36,10 +36,12 @@ function changeTime(value) {
    //update UI
    document.getElementById("timer").value = min+":"+sec;
    time--;
-   if(time == -1) {
+   if(time == ) {
    		clearInterval(vari);
    		alert('Time is up! ');
-   		//switch pages now!!   		
+   		//switch pages now!!  
+   		window.location.href = "http://stackoverflow.com";
+
    }
 
 }

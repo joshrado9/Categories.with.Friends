@@ -24,15 +24,14 @@ var mysql = require('mysql');
 
 
 
-
-
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
 
 
 //this is the 
 app.get('/', function(req, res){
-  	res.render('hiscores.jade', {title: 'Hiscores'});
+	var ty = 'Hiscores';
+  	res.render('hiscores.jade', {title: ty});
   	console.log('What even');
 });
 
@@ -69,7 +68,7 @@ var high = 2;
 var low = 1;
 var cat = Math.floor(Math.random() * (high - low) + low);
 
-var value1 = "nothing ";
+var value1 = "nothing|";
 db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
 {
 	//if (err) throw err;
@@ -88,27 +87,48 @@ db.query('SELECT name FROM categories WHERE id = 2', function(err, rows)
 	console.log('Data received from Db:(value)\n');
 	console.log(value1);
 
-	value1 = value1+" "+ rows[0].name;
+	value1 = value1+"|"+ rows[0].name;
 	console.log(value1);
 	
-	//turn into JSON 
-	var values = value1.split(" ");
 
-	
-	//send to the client
-//	res.send(JSON.stringify(response));
+	///res.end(value1);
+
+});
+db.query('SELECT name FROM categories WHERE id = 3', function(err, rows)
+{
+	//if (err) throw err;
+//	console.log('2');
+//	console.log('Data received from Db:(value)\n');
+//	console.log(value1);
+
+	value1 = value1+"|"+ rows[0].name;
+	console.log(value1);
 	
 
 });
+db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
+{
+	//if (err) throw err;
+	console.log('2');
+	console.log('Data received from Db:(value)\n');
+	console.log(value1);
 
-res.send(value1);
+	value1 = value1+"|"+ rows[0].name;
+	console.log(value1);
+	
+	var val = value1.split("|");
+	
+	//send the data to Main
+	res.render('main.jade', {title: 'Guess the Word', value: val});
 
-console.log(value1);
+	///res.end(value1);
 
-res.render('main.jade', {title: 'Guess the Word'});
-res.end();
+});
+
+
+
 //end all the things
-db.end();
+db.end({timeout: 60000});
 
 
 	
