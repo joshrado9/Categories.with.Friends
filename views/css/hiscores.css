@@ -5,7 +5,15 @@
 .table-header {
 	color:red;
 }
+.scores {	
+	display:none;
+}
 
+.divider{
+    width:100px;
+    height:auto;
+    display:inline-block;
+}
 td {
 	color:white;
 	padding: 23px;
