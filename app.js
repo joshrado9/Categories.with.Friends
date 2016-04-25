@@ -37,8 +37,17 @@ db = mysql.createConnection(
 
 db.connect();
 
+	db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
+	{
+		if (err) throw err;
+	
+		console.log('1');
+		console.log('Data received from Db:\n');
+		console.log(rows);
+	});
 
 
+db.end();
 //this is the 
 app.get('/', function(req, res){
 	var high = 2;
@@ -46,15 +55,8 @@ app.get('/', function(req, res){
 
 	var cat = Math.floor(Math.random() * (high - low) + low);
 
-	db.query('SELECT name FROM categories WHERE id = ' + cat, function(err, rows)
-	{
-		if (err) throw err;
-	
-		console.log(cat);
-		console.log('Data received from Db:\n');
-		console.log(rows);
-	});
-	db.end();
+
+
 
   	res.render('hiscores.jade', {title: 'Hiscores'});
   	console.log('What even');
