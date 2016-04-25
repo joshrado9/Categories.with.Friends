@@ -37,7 +37,7 @@ db = mysql.createConnection(
 
 var letter;
 var categories;
-
+var cpuanswers;
 
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
@@ -113,79 +113,126 @@ app.get('/hi', function(req, res) {
 app.get('/play', function(req, res){	
 
 
-//get random category
-var high = 2;
-var low = 1;
-var cat = Math.floor(Math.random() * (high - low) + low);
+	//get random category
+	var high = 6;
+	var low = 1;
+	var cat1 = Math.floor(Math.random() * (high - low) + low);
+	
+	//generate a letter
+	var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	letter = Math.floor( Math.random() * 26) ;
+	
+	
+	//DB Connection
+	
+	
+	var cat1String, cat2String, cat3String, cat4String;
+	var value1 = "nothing|";
+	var cpu = "";
+	db.query('SELECT name FROM categories WHERE id = '+ cat1, function(err, rows)
+	{
+		console.log('Data received from Db1:\n');
+		console.log('1 '+rows[0].name);
+		cat1String = rows[0].name;
+		console.log(cat1String);
+	
+		value1 = value1+rows[0].name;
 
-//generate a letter
-var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		var query = "SELECT " + cat1String + " FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			console.log(rows1[0].cat1String);
+			cpu = cpu + "|" + rows1[0].cat1String;
+		});
+		
+	});
+	
+	var cat2 = Math.floor(Math.random() * (high - low) + low);
+	while (cat2 == cat1)
+	{
+		console.log('cat2 loop');
+		cat2 = Math.floor(Math.random() * (high - low) + low);
+	}
+	db.query('SELECT name FROM categories WHERE id = '+cat2, function(err, rows)
+	{
+	
+		console.log('2');
+		console.log('Data received from Db2:(value)\n');
+		console.log('2'+value1);
+		cat2String = rows[0].name;
+	
+		value1 = value1+"|"+ rows[0].name;
+		console.log('2'+value1);
+		
+		var query = "SELECT " + cat2String + " FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			console.log(rows1[0].cat2String);
+			cpu = cpu + "|" + rows1[0].cat2String;
+		});
+	});
+	
+	var cat3 = Math.floor(Math.random() * (high - low) + low);
+	while (cat3 == cat1 || cat3 == cat2)
+	{
+		console.log('cat3 loop');
+		cat3 = Math.floor(Math.random() * (high - low) + low);
+	}
+	db.query('SELECT name FROM categories WHERE id = '+cat3, function(err, rows)
+	{
+		console.log('3');
+		console.log('Data received from Db3:(value)\n');
+		value1 = value1+"|"+ rows[0].name;
+		console.log('3'+value1);
+		cat3String = rows[0].name;
+		
+		var query = "SELECT " + cat3String + " FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			console.log(rows1[0].cat3String);
+			cpu = cpu + "|" + rows1[0].cat3String;
+		});
+	});
 
-letter = Math.floor( Math.random() * 26) ;
+	db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
+	{
+		//if (err) throw err;
+		console.log('4');
+		console.log('Data received from Db4:(value)\n');	
+		value1 = value1+"|"+ rows[0].name;
+		console.log('4'+value1);
+		cat4String = rows[0].name;
+		
+		var query = "SELECT " + cat4String + " FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			console.log(rows1[0].cat4String);
+			cpu = cpu + "|" + rows1[0].cat4String;
+		});
+		
+		
+		//store the categories
+		categories= value1;
+		var val = value1.split("|");
+		
+		cpuanswers = cpu;
+		var comp = cpu.split("|");		
+		//send the data to Main
+		res.render('main.jade', {title: 'Guess the Word', value: val, letr: alpha.charAt(letter-1)});
+	
+		///res.end(value1);
+	
+	});
+	
+	
+		
+});
 
-
-//DB Connection
-
-
-
-var value1 = "nothing|";
-db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
+app.get('/quit', function(req, res)
 {
-
-	console.log('1');
-	console.log('Data received from Db:\n');
-	console.log(rows[0].name);
-	
-	value1 = value1+rows[0].name;
-	
+	db.end();
 });
-
-db.query('SELECT name FROM categories WHERE id = 2', function(err, rows)
-{
-
-	console.log('2');
-	console.log('Data received from Db:(value)\n');
-	console.log(value1);
-
-	value1 = value1+"|"+ rows[0].name;
-	console.log(value1);
-	
-});
-db.query('SELECT name FROM categories WHERE id = 3', function(err, rows)
-{
-
-	value1 = value1+"|"+ rows[0].name;
-	console.log(value1);
-	
-
-});
-db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
-{
-	//if (err) throw err;
-	console.log('2');
-	console.log('Data received from Db:(value)\n');
-	console.log(value1);
-
-	value1 = value1+"|"+ rows[0].name;
-	console.log(value1);
-	
-	//store the categories
-	categories= value1;
-	
-	var val = value1.split("|");
-	
-	//send the data to Main
-	res.render('main.jade', {title: 'Guess the Word', value: val, letr: alpha.charAt(letter-1)});
-
-	///res.end(value1);
-
-});
-
-
-	
-});
-
-
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
