@@ -12,6 +12,9 @@ function checkTime() {
 	var d = new Date();
 	var value = 0;
 	console.log("Ti");
+	
+	clearTimeout(branch);
+	
 	vari = setInterval(changeTime, 1000, value);
 	//clearInterval(vari);
 
@@ -21,35 +24,41 @@ function changeTime(value) {
 	
    console.log("Time Diff"+  time);
    //format correctly
-   	 
+   var min =Math.floor(time/60);
+   var sec = time%60;
+   //add th ezero padding
+   if(sec < 10)
+     sec = "0"+sec;
    
    //update UI
-   document.getElementById("timer").value = time;
+   document.getElementById("timer").value = min+":"+sec;
    time++;
    if(time == 121) {
    		clearInterval(vari);
-   		
+   		alert('Time is up! ');
+   		//switch pages now!!   		
    }
 
 }
 
-
+var branch;
 function start() {
 	//hide the button and the title
 	document.getElementById("ready").style.display = "none";
-	document.getElementById("cate").style.display = "none";
+	//document.getElementById("cate").style.display = "none";
 
 	//document.getElementById("score").style.display = "block";
 
 	
 	//display the relevent things
 	$("#score").fadeIn();
+	$("#scoreT").fadeIn();	
 	$("#power").fadeIn();
 	$("#inputting").fadeIn();
 	
 	
 //	console.log(d.toLocaleTimeString()+" "+ document.getElementById("score").innnerHTML);
-	setTimeout(checkTime, 1000);
+	branch = setTimeout(checkTime, 1000);
 
 
 }

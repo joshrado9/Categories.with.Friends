@@ -25,28 +25,28 @@ app.use(express.static(__dirname + '/views'));
 var db = null;
 
 var mysql = require('mysql');
-db = mysql.createConnection(
-{
-	host: 'us-cdbr-iron-east-03.cleardb.net',
-	port: '3306',
-	user: 'b949f5a82f36fb',
-	password: '3b81693c',
-	database: 'ad_3063a2f467afe38'
-});
+//db = mysql.createConnection(
+//{
+//	host: 'us-cdbr-iron-east-03.cleardb.net',
+//	port: '3306',
+//	user: 'b949f5a82f36fb',
+//	password: '3b81693c',
+//	database: 'ad_3063a2f467afe38'
+//});
 
 var high = 2;
 var low = 1;
 
 var cat = Math.floor(Math.random() * (high - low) + low);
 
-db.query('SELECT name FROM categories WHERE id = ' + cat, function(err, rows)
-{
-	if (err) throw err;
-	
-	console.log(cat);
-	console.log('Data received from Db:\n');
-	console.log(rows);
-});
+//db.query('SELECT name FROM categories WHERE id = ' + cat, function(err, rows)
+//{
+//	if (err) throw err;
+//	
+//	console.log(cat);
+//	console.log('Data received from Db:\n');
+//	console.log(rows);
+//});
 
 //this is the 
 app.get('/', function(req, res){
@@ -86,7 +86,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 });
 console.log('What just');
 
-db.end();
+//db.end();
 
 
 
