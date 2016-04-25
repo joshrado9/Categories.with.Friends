@@ -20,7 +20,7 @@ function checkTime() {
 	//clearInterval(vari);
 
 }
-var time = 0;
+var time = 120;
 function changeTime(value) {
 	
    console.log("Time Diff"+  time);
@@ -33,8 +33,8 @@ function changeTime(value) {
    
    //update UI
    document.getElementById("timer").value = min+":"+sec;
-   time++;
-   if(time == 121) {
+   time--;
+   if(time == -1) {
    		clearInterval(vari);
    		alert('Time is up! ');
    		//switch pages now!!   		
