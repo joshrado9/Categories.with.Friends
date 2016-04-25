@@ -3,13 +3,16 @@
 }
 
 .table-header {
-	color:yellow;
+	color:red;
 }
 
 td {
 	color:white;
+	padding: 23px;
+	font-size:20px;
+
 }
 
 table,th,td {
-	border:3px solid yellow;
+	border:3px solid red;
 }

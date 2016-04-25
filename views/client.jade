@@ -6,11 +6,10 @@ html(lang="en")
   body(style="background-color: blue")     
     section()
       h1(id="header") 
-        table(id="Your guesses" style="font-size: 26px")
-
+        table(id="Your guesses" style="font-size: 25px")
         table()
-          tr
-            td
+          tr()
+            td()
               | Your Answers
               td() The Computer's output  
               tr()
@@ -25,7 +24,7 @@ html(lang="en")
               td() The Computer's output                              
                 tr()
               th(class="table-header") #{answer[3]}
-              td() The Computer's output                              
+              td() The Computer's output                                
               
                 tr()
               th(class="table-header") #{answer[4]}  
@@ -37,7 +36,7 @@ html(lang="en")
               
         
       div(style="padding-top:30px;")
-        a(class="btn btn-primary", href="/play") Check Score!
+        button(class="btn btn-primary", onclick="score()") Check Score!
         a(class="btn btn-info", href="/play" style="display: none") Play again!
       
     script(src="js/jquery.js", type="text/javascript")
