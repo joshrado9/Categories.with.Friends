@@ -39,7 +39,7 @@ db.connect();
 
 	db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
 	{
-		if (err) throw err;
+		//if (err) throw err;
 	
 		console.log('1');
 		console.log('Data received from Db:\n');
@@ -50,12 +50,10 @@ db.connect();
 db.end();
 //this is the 
 app.get('/', function(req, res){
-	var high = 2;
-	var low = 1;
+	//var high = 2;
+	//var low = 1;
 
-	var cat = Math.floor(Math.random() * (high - low) + low);
-
-
+	//var cat = Math.floor(Math.random() * (high - low) + low);
 
 
   	res.render('hiscores.jade', {title: 'Hiscores'});
