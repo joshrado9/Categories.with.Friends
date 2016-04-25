@@ -17,6 +17,14 @@ var express = require('express');
 // create a new express server
 var app = express();
 
+//Database setup
+var db = null;
+
+var mysql = require('mysql');
+
+
+
+
 
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
@@ -46,7 +54,32 @@ app.get('/hi', function(req, res) {
 app.get('/play', function(req, res){	
     res.render('main.jade', {title: 'Guess the Word'});
 	//res.send('nothing works');
+	db = mysql.createConnection(
+{
+	host: 'us-cdbr-iron-east-03.cleardb.net',
+	port: '3306',
+	user: 'b949f5a82f36fb',
+	password: '3b81693c',
+	database: 'ad_3063a2f467afe38'
+});
+
+db.connect();
+
+//get random category
+var high = 2;
+var low = 1;
+var cat = Math.floor(Math.random() * (high - low) + low);
+
+db.query('SELECT name FROM categories WHERE id = ' + cat, function(err, rows)
+{
+	//if (err) throw err;
 	
+	console.log('1');
+	console.log('Data received from Db:\n');
+	console.log(rows);
+});
+
+db.end();
 	
 	
 });
