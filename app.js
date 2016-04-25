@@ -52,9 +52,8 @@ app.get('/hi', function(req, res) {
 
 //ths i 
 app.get('/play', function(req, res){	
-    res.render('main.jade', {title: 'Guess the Word'});
-	//res.send('nothing works');
-	db = mysql.createConnection(
+
+db = mysql.createConnection(
 {
 	host: 'us-cdbr-iron-east-03.cleardb.net',
 	port: '3306',
@@ -70,17 +69,48 @@ var high = 2;
 var low = 1;
 var cat = Math.floor(Math.random() * (high - low) + low);
 
-db.query('SELECT name FROM categories WHERE id = ' + cat, function(err, rows)
+var value1 = "nothing ";
+db.query('SELECT name FROM categories WHERE id = 1', function(err, rows)
 {
 	//if (err) throw err;
-	
 	console.log('1');
 	console.log('Data received from Db:\n');
-	console.log(rows);
+	console.log(rows[0].name);
+	
+	value1 = value1+rows[0].name;
+	
 });
 
-db.end();
+db.query('SELECT name FROM categories WHERE id = 2', function(err, rows)
+{
+	//if (err) throw err;
+	console.log('2');
+	console.log('Data received from Db:(value)\n');
+	console.log(value1);
+
+	value1 = value1+" "+ rows[0].name;
+	console.log(value1);
 	
+	//turn into JSON 
+	var values = value1.split(" ");
+
+	
+	//send to the client
+//	res.send(JSON.stringify(response));
+	
+
+});
+
+res.send(value1);
+
+console.log(value1);
+
+res.render('main.jade', {title: 'Guess the Word'});
+res.end();
+//end all the things
+db.end();
+
+
 	
 });
 
