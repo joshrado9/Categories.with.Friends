@@ -106,41 +106,24 @@ app.get('/play', function(req, res){
 	var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	letter = Math.floor( Math.random() * 26) ;
-	
-	
-	//DB Connection
-	
-	
-	var cat1String, cat2String, cat3String, cat4String;
+
+	var cat1String, cat2String, cat3String;
 	var value1 = "";
 	var cpu = "";
 	db.query('SELECT name FROM categories WHERE id = '+ cat1, function(err, rows)
 	{
-		console.log('Data received from Db1:\n');
-//		console.log('1 '+rows[0].name);
 		cat1String = rows[0].name;
-
-	
 		value1 = value1+rows[0].name;
+		console.log("Cat Query 1" + value1);
 
 		var query = "SELECT " + cat1String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
-			console.log("word " + cat1String);
-			console.log(rows1[0].hello);
-			
-			
-			//DEBUGGING
 			var answerWhole = "";
-
 			answerWhole = rows1[0].hello.split(",");
-
-
 			
 			var rng = answerWhole.length + 1;
 			var rn = Math.floor(Math.random() * (rng));
-			
-			//console.log("Whole " + answerWhole[3]);
 			if (rn < answerWhole.length)
 			{
 				cpu = answerWhole[rn];
@@ -150,11 +133,8 @@ app.get('/play', function(req, res){
 				cpu = "No Answer";
 			}
 			
-
-			console.log(cpu);
-			
-			//add to global
 			cpuanswers = cpuanswers+cpu;
+			console.log("CPU Ans 1" + cpuanswers);
 		});
 		
 	});
@@ -167,45 +147,29 @@ app.get('/play', function(req, res){
 	}
 	db.query('SELECT name FROM categories WHERE id = '+cat2, function(err, rows)
 	{
-	
-//		console.log('2');
-		console.log('Data received from Db2:(value)\n');
-//		console.log('2'+value1);
 		cat2String = rows[0].name;
-	
 		value1 = value1+"|"+ rows[0].name;
-		console.log('2'+value1);
+		console.log("Cat Query 2" + value1);
 		
 		var query = "SELECT " + cat2String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
-			console.log("word " + cat2String);
-			console.log("data2 "+rows1[0].hello);
-			
-			//DEBUGGING
 			var answerWhole;
-			  answerWhole = rows1[0].hello.split(",");
-			
+			answerWhole = rows1[0].hello.split(",");
 			
 			var rng = answerWhole.length + 1;
 			var rn = Math.floor(Math.random() * (rng));
-			
-			//console.log("Whole " + answerWhole[3]);
 			if (rn < answerWhole.length)
 			{
-				cpu = cpu + "|" + answerWhole[rn];
+				cpu = "|" + answerWhole[rn];
 			}
 			else 
 			{
-				cpu = cpu + "|No Answer";
+				cpu = "|No Answer";
 			}
 			
-
-
-			
 			cpuanswers = cpuanswers+cpu;
-			console.log(cpuanswers);
-			
+			console.log("CPU Ans 2" + cpuanswers);
 		});
 	});
 	
@@ -217,49 +181,29 @@ app.get('/play', function(req, res){
 	}
 	db.query('SELECT name FROM categories WHERE id = '+cat3, function(err, rows)
 	{
-	//	console.log('3');
-		console.log('Data received from Db3:(value)\n');
 		value1 = value1+"|"+ rows[0].name;
-	//	console.log('3'+value1);
 		cat3String = rows[0].name;
+		console.log("Cat Query 3" + value1);
 		
 		var query = "SELECT " + cat3String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
-			console.log("word " + cat3String);
-			console.log("Data3 "+rows1[0].hello);
-			//DEBUGGING
-			var answerWhole = "nothin,";
-			if (rows1[0].hello != null){
-			  answerWhole = rows1[0].hello.split(",");
-			}
-			else {
-				
-				console.log("3 You have a null");
-				return;
-			}
+			var answerWhole;
+			answerWhole = rows1[0].hello.split(",");
 			
 			var rng = answerWhole.length + 1;
 			var rn = Math.floor(Math.random() * (rng));
-			
-			//console.log("Whole " + answerWhole[3]);
 			if (rn < answerWhole.length)
 			{
-				cpu = cpu + "|" + answerWhole[rn];
+				cpu = "|" + answerWhole[rn];
 			}
 			else 
 			{
-				cpu = cpu + "|No Answer";
+				cpu = "|No Answer";
 			}
-			
-
-			console.log(cpu);
-			
 			cpuanswers = cpuanswers+cpu;
-		});
-		
-		//TODO pass value and cpuanswers here.
-		
+			console.log("CPU Ans 3" + cpuanswers);
+		});		
 		//store the categories
 		categories= value1;
 		var val = value1.split("|");
@@ -268,15 +212,7 @@ app.get('/play', function(req, res){
 		var comp = cpu.split("|");		
 		//send the data to Main
 		res.render('main.jade', {title: 'Categories w/ Friends', value: val, letr: alpha.charAt(letter-1) });
-	
-		
-		
 	});
-
-
-	
-	
-		
 });
 
 app.get('/quit', function(req, res)
