@@ -25,7 +25,7 @@ var app = express();
 var db = null;
 
 var mysql = require('mysql');
-
+/*
 db = mysql.createConnection(
 {
 	host: 'us-cdbr-iron-east-03.cleardb.net',
@@ -36,10 +36,42 @@ db = mysql.createConnection(
 });
 
 db.connect();
-
+*/
 var letter;
 var categories;
 var cpuanswers;
+
+function handleDisconnect()
+{
+	db = mysql.createConnection({
+		host: 'us-cdbr-iron-east-03.cleardb.net',
+		port: '3306',
+		user: 'b949f5a82f36fb',
+		password: '3b81693c',
+		database: 'ad_3063a2f467afe38'
+	});
+	
+	db.connect(function(err) {
+		if (err) {
+			console.log('error when connecting to the db:', err);
+			setTimeout(handleDisconnect, 2000);
+		}
+	});
+	
+	db.on('error', function(err) {
+		console.log('db error', err);
+		if (err.code === 'PROTOCOL_CONNECTION_LOST')
+		{
+			handleDisconnect();
+		}
+		else
+		{
+			throw err;
+		}
+	});
+}
+
+handleDisconnect();
 
 // serve the files out of ./views as our main files
 app.use(express.static(__dirname + '/views'));
