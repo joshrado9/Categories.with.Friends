@@ -131,7 +131,7 @@ app.get('/play', function(req, res){
 	
 	
 	var cat1String, cat2String, cat3String, cat4String;
-	var value1 = "nothing|";
+	var value1 = "";
 	var cpu = "";
 	db.query('SELECT name FROM categories WHERE id = '+ cat1, function(err, rows)
 	{
@@ -142,17 +142,28 @@ app.get('/play', function(req, res){
 	
 		value1 = value1+rows[0].name;
 
-		var query = "SELECT " + cat1String + " FROM word WHERE id = " + letter;
+		var query = "SELECT " + cat1String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
 			console.log("word " + cat1String);
-			console.log(rows1[0]);
-			var str = JSON.stringify(rows1[0]);
-			console.log("Whole " + str);
-			//var answerWhole = str.split(" \" ");
+			console.log(rows1[0].hello);
+			var answerWhole = rows1[0].hello.split(",");
 			
-			console.log("Whole " + answerWhole[3]);
-			//cpu = cpu + "|" + rows1[0].cat1String;
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			
+			//console.log("Whole " + answerWhole[3]);
+			if (rn < answerWhole.length)
+			{
+				cpu = answerWhole[rn];
+			}
+			else 
+			{
+				cpu = "nothing";
+			}
+			
+
+			console.log(cpu);
 		});
 		
 	});
@@ -174,11 +185,28 @@ app.get('/play', function(req, res){
 		value1 = value1+"|"+ rows[0].name;
 		console.log('2'+value1);
 		
-		var query = "SELECT " + cat2String + " FROM word WHERE id = " + letter;
+		var query = "SELECT " + cat2String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
-			console.log(rows1[0]);
-			//cpu = cpu + "|" + rows1[0].cat2String;
+			console.log("word " + cat2String);
+			console.log(rows1[0].hello);
+			var answerWhole = rows1[0].hello.split(",");
+			
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			
+			//console.log("Whole " + answerWhole[3]);
+			if (rn < answerWhole.length)
+			{
+				cpu = cpu + "|" + answerWhole[rn];
+			}
+			else 
+			{
+				cpu = cpu + "|nothing";
+			}
+			
+
+			console.log(cpu);
 		});
 	});
 	
@@ -196,12 +224,33 @@ app.get('/play', function(req, res){
 		console.log('3'+value1);
 		cat3String = rows[0].name;
 		
-		var query = "SELECT " + cat3String + " FROM word WHERE id = " + letter;
+		var query = "SELECT " + cat3String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
-			console.log(rows1[0]);
-			//cpu = cpu + "|" + rows1[0].cat3String;
+			console.log("word " + cat3String);
+			console.log(rows1[0].hello);
+			var answerWhole = rows1[0].hello.split(",");
+			
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			
+			//console.log("Whole " + answerWhole[3]);
+			if (rn < answerWhole.length)
+			{
+				cpu = cpu + "|" + answerWhole[rn];
+			}
+			else 
+			{
+				cpu = cpu + "|nothing";
+			}
+			
+
+			console.log(cpu);
 		});
+		
+		//TODO pass value and cpuanswers here.
+		
+		
 	});
 
 	db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
@@ -213,11 +262,27 @@ app.get('/play', function(req, res){
 		console.log('4'+value1);
 		cat4String = rows[0].name;
 		
-		var query = "SELECT " + cat4String + " FROM word WHERE id = " + letter;
+		var query = "SELECT " + cat4String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
-			console.log(rows1);
-			//cpu = cpu + "|" + rows1[0].cat4String;
+			console.log("word " + cat4String);
+			console.log(rows1[0].hello);
+			var answerWhole = rows1[0].hello.split(",");
+			
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			
+			//console.log("Whole " + answerWhole[3]);
+			if (rn < answerWhole.length)
+			{
+				cpu = cpu + "|" + answerWhole[rn];
+			}
+			else 
+			{
+				cpu = cpu + "|nothing";
+			}
+			
+			console.log(cpu);
 		});
 		
 		
