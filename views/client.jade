@@ -16,21 +16,21 @@ html(lang="en")
               tr()
               th(class="table-header" id="ans1") #{answer[0]}
               td(id="cpu1") #{cpu[0]}   
-                if answer[0] == '' 
+                if ( answer[0] != '' && (answer[0] != cpu[0] || cpu[0] == '') )
                   td(class="scores") Points!
                 else
                   td(class="scores") No Points!       
                 tr() 
               th(class="table-header" id="ans2") #{answer[1]}
-              td(id="cpu12") #{cpu[0]}                
-                if answer[1] == '' 
+              td(id="cpu2") #{cpu[1]}                
+                if ( answer[1] != '' && (answer[0] != cpu[0] || cpu[0] == '') )
                   td(class="scores") Points!
                 else
                   td(class="scores") No Points!       
                 tr()
               th(class="table-header" id="ans3") #{answer[2]}
-              td(id="cpu3") The Computer's output              
-                if answer[2] == '' 
+              td(id="cpu3") #{cpu[2]}             
+                if ( answer[2] != '' && (answer[0] != cpu[0] || cpu[0] == '') )
                   td(class="scores") Points!
                 else
                   td(class="scores") No Points!       

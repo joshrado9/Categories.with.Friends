@@ -60,42 +60,23 @@ app.get('/check', function(req, res) {
 	
 	
 	//concat the data
-	var sends = req.query.one +"|"+req.query.two+"|"+req.query.three+"|"+req.query.four+"|"+req.query.five;
+	var sends = req.query.one +"|"+req.query.two+"|"+req.query.three;
 	console.log("Body of req "+sends);
+	
 	//split to array of strings
 	sends = sends.split("|");
 	
-	//get computer outputs
-	var comp = "blank|";
-	
-	//DB queries
 	
 	//split the categories
 	var cates = categories.split("|");
 	
 	//generate random number
-//	var index = Math.floor(Math.random()*25) + 1;
-	console.log(letter+"  "+cates[1]);
-	//	db.query('SELECT fruits FROM word WHERE id = 1', function(err, rows)
-//	{
-//	
-//		console.log('stuff');
-//		if(cates[1] == 'fruits')
-//			console.log('row content: '+rows[0].fruits[0]);
-//								
-//		var tmp = rows[0].fruits;
-//		
-//		if(tmp.indexOf(',') != -1)
-//			tmp = tmp.substr(0, tmp.indexOf(','));
-//		
-//		comp = comp + tmp;
-//	});
 
-    
-	console.log(comp);
+	console.log(cpuanswers);   
 	
 	//TODO split into an array and send to client via res.render()
-	var sendC = comp.split("|");
+	var sendC = cpuanswers.split("|");
+	console.log(sendC[0]+" "+sendC[1]+" "+sendC[2]);
 	
 	//send a full string
 	res.render('client.jade', {answer: sends, cpu: sendC});
@@ -136,9 +117,9 @@ app.get('/play', function(req, res){
 	db.query('SELECT name FROM categories WHERE id = '+ cat1, function(err, rows)
 	{
 		console.log('Data received from Db1:\n');
-		console.log('1 '+rows[0]);
+//		console.log('1 '+rows[0].name);
 		cat1String = rows[0].name;
-		console.log(cat1String);
+
 	
 		value1 = value1+rows[0].name;
 
@@ -147,7 +128,14 @@ app.get('/play', function(req, res){
 		{
 			console.log("word " + cat1String);
 			console.log(rows1[0].hello);
-			var answerWhole = rows1[0].hello.split(",");
+			
+			
+			//DEBUGGING
+			var answerWhole = "";
+
+			answerWhole = rows1[0].hello.split(",");
+
+
 			
 			var rng = answerWhole.length + 1;
 			var rn = Math.floor(Math.random() * (rng));
@@ -159,11 +147,14 @@ app.get('/play', function(req, res){
 			}
 			else 
 			{
-				cpu = "nothing";
+				cpu = "No Answer";
 			}
 			
 
 			console.log(cpu);
+			
+			//add to global
+			cpuanswers = cpuanswers+cpu;
 		});
 		
 	});
@@ -177,9 +168,9 @@ app.get('/play', function(req, res){
 	db.query('SELECT name FROM categories WHERE id = '+cat2, function(err, rows)
 	{
 	
-		console.log('2');
+//		console.log('2');
 		console.log('Data received from Db2:(value)\n');
-		console.log('2'+value1);
+//		console.log('2'+value1);
 		cat2String = rows[0].name;
 	
 		value1 = value1+"|"+ rows[0].name;
@@ -189,8 +180,12 @@ app.get('/play', function(req, res){
 		db.query(query, function(err1, rows1)
 		{
 			console.log("word " + cat2String);
-			console.log(rows1[0].hello);
-			var answerWhole = rows1[0].hello.split(",");
+			console.log("data2 "+rows1[0].hello);
+			
+			//DEBUGGING
+			var answerWhole;
+			  answerWhole = rows1[0].hello.split(",");
+			
 			
 			var rng = answerWhole.length + 1;
 			var rn = Math.floor(Math.random() * (rng));
@@ -202,11 +197,15 @@ app.get('/play', function(req, res){
 			}
 			else 
 			{
-				cpu = cpu + "|nothing";
+				cpu = cpu + "|No Answer";
 			}
 			
 
-			console.log(cpu);
+
+			
+			cpuanswers = cpuanswers+cpu;
+			console.log(cpuanswers);
+			
 		});
 	});
 	
@@ -218,18 +217,27 @@ app.get('/play', function(req, res){
 	}
 	db.query('SELECT name FROM categories WHERE id = '+cat3, function(err, rows)
 	{
-		console.log('3');
+	//	console.log('3');
 		console.log('Data received from Db3:(value)\n');
 		value1 = value1+"|"+ rows[0].name;
-		console.log('3'+value1);
+	//	console.log('3'+value1);
 		cat3String = rows[0].name;
 		
 		var query = "SELECT " + cat3String + " AS hello FROM word WHERE id = " + letter;
 		db.query(query, function(err1, rows1)
 		{
 			console.log("word " + cat3String);
-			console.log(rows1[0].hello);
-			var answerWhole = rows1[0].hello.split(",");
+			console.log("Data3 "+rows1[0].hello);
+			//DEBUGGING
+			var answerWhole = "nothin,";
+			if (rows1[0].hello != null){
+			  answerWhole = rows1[0].hello.split(",");
+			}
+			else {
+				
+				console.log("3 You have a null");
+				return;
+			}
 			
 			var rng = answerWhole.length + 1;
 			var rn = Math.floor(Math.random() * (rng));
@@ -241,11 +249,13 @@ app.get('/play', function(req, res){
 			}
 			else 
 			{
-				cpu = cpu + "|nothing";
+				cpu = cpu + "|No Answer";
 			}
 			
 
 			console.log(cpu);
+			
+			cpuanswers = cpuanswers+cpu;
 		});
 		
 		//TODO pass value and cpuanswers here.
@@ -257,49 +267,13 @@ app.get('/play', function(req, res){
 		cpuanswers = cpu;
 		var comp = cpu.split("|");		
 		//send the data to Main
-		res.render('main.jade', {title: 'Categories w/ Friends', value: val, letr: alpha.charAt(letter-1), });
+		res.render('main.jade', {title: 'Categories w/ Friends', value: val, letr: alpha.charAt(letter-1) });
 	
 		
 		
 	});
 
-//	db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
-//	{
-//		//if (err) throw err;
-//		console.log('4');
-//		console.log('Data received from Db4:(value)\n');	
-//		value1 = value1+"|"+ rows[0].name;
-//		console.log('4'+value1);
-//		cat4String = rows[0].name;
-//		
-//		var query = "SELECT " + cat4String + " AS hello FROM word WHERE id = " + letter;
-//		db.query(query, function(err1, rows1)
-//		{
-//			console.log("word " + cat4String);
-//			console.log(rows1[0].hello);
-//			var answerWhole = rows1[0].hello.split(",");
-//			
-//			var rng = answerWhole.length + 1;
-//			var rn = Math.floor(Math.random() * (rng));
-//			
-//			//console.log("Whole " + answerWhole[3]);
-//			if (rn < answerWhole.length)
-//			{
-//				cpu = cpu + "|" + answerWhole[rn];
-//			}
-//			else 
-//			{
-//				cpu = cpu + "|nothing";
-//			}
-//			
-//			console.log(cpu);
-//		});
-//		
-//		
-//
-//		///res.end(value1);
-//	
-//	});
+
 	
 	
 		
