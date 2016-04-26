@@ -1,6 +1,6 @@
 
 
-var time = 120;
+var time = 30;
 //the submit function
 function submit() {
 	//alert("Submitted!");

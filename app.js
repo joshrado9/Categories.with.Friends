@@ -250,42 +250,6 @@ app.get('/play', function(req, res){
 		
 		//TODO pass value and cpuanswers here.
 		
-		
-	});
-
-	db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
-	{
-		//if (err) throw err;
-		console.log('4');
-		console.log('Data received from Db4:(value)\n');	
-		value1 = value1+"|"+ rows[0].name;
-		console.log('4'+value1);
-		cat4String = rows[0].name;
-		
-		var query = "SELECT " + cat4String + " AS hello FROM word WHERE id = " + letter;
-		db.query(query, function(err1, rows1)
-		{
-			console.log("word " + cat4String);
-			console.log(rows1[0].hello);
-			var answerWhole = rows1[0].hello.split(",");
-			
-			var rng = answerWhole.length + 1;
-			var rn = Math.floor(Math.random() * (rng));
-			
-			//console.log("Whole " + answerWhole[3]);
-			if (rn < answerWhole.length)
-			{
-				cpu = cpu + "|" + answerWhole[rn];
-			}
-			else 
-			{
-				cpu = cpu + "|nothing";
-			}
-			
-			console.log(cpu);
-		});
-		
-		
 		//store the categories
 		categories= value1;
 		var val = value1.split("|");
@@ -293,11 +257,49 @@ app.get('/play', function(req, res){
 		cpuanswers = cpu;
 		var comp = cpu.split("|");		
 		//send the data to Main
-		res.render('main.jade', {title: 'Guess the Word', value: val, letr: alpha.charAt(letter-1), });
+		res.render('main.jade', {title: 'Categories w/ Friends', value: val, letr: alpha.charAt(letter-1), });
 	
-		///res.end(value1);
-	
+		
+		
 	});
+
+//	db.query('SELECT name FROM categories WHERE id = 4', function(err, rows)
+//	{
+//		//if (err) throw err;
+//		console.log('4');
+//		console.log('Data received from Db4:(value)\n');	
+//		value1 = value1+"|"+ rows[0].name;
+//		console.log('4'+value1);
+//		cat4String = rows[0].name;
+//		
+//		var query = "SELECT " + cat4String + " AS hello FROM word WHERE id = " + letter;
+//		db.query(query, function(err1, rows1)
+//		{
+//			console.log("word " + cat4String);
+//			console.log(rows1[0].hello);
+//			var answerWhole = rows1[0].hello.split(",");
+//			
+//			var rng = answerWhole.length + 1;
+//			var rn = Math.floor(Math.random() * (rng));
+//			
+//			//console.log("Whole " + answerWhole[3]);
+//			if (rn < answerWhole.length)
+//			{
+//				cpu = cpu + "|" + answerWhole[rn];
+//			}
+//			else 
+//			{
+//				cpu = cpu + "|nothing";
+//			}
+//			
+//			console.log(cpu);
+//		});
+//		
+//		
+//
+//		///res.end(value1);
+//	
+//	});
 	
 	
 		
