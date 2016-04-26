@@ -147,7 +147,7 @@ app.get('/play', function(req, res){
 			console.log(rows1[0]);
 			var str = JSON.stringify(rows1[0]);
 			console.log("Whole " + str);
-			var answerWhole = str.split("\\"");
+			var answerWhole = str.split("\"");
 			
 			console.log("Whole " + answerWhole[3]);
 			//cpu = cpu + "|" + rows1[0].cat1String;
