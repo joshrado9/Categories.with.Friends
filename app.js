@@ -111,6 +111,17 @@ app.get('/check', function(req, res) {
 	console.log(sendC[0]+" "+sendC[1]+" "+sendC[2]);
 	
 	var score = 0;
+	
+	for(var u = 0; u < sends.length; u++) {
+		
+		var one = sends[u].toLowerCase();
+		var two = sendC[u].toLowerCase();
+		
+		if((one !== two || two !== '') && one !== '')
+			score++;
+		
+	}	
+
 
 	res.render('client.jade', {answer: sends, cpu: sendC, total: score});
 	
