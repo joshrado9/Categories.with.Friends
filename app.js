@@ -35,6 +35,8 @@ db = mysql.createConnection(
 	database: 'ad_3063a2f467afe38'
 });
 
+db.connect();
+
 var letter;
 var categories;
 var cpuanswers;
@@ -45,7 +47,7 @@ app.use(express.static(__dirname + '/views'));
 
 //this is the 
 app.get('/', function(req, res){
-	db.connect();
+
 	var ty = 'Hiscores';
   	res.render('hiscores.jade', {title: ty});
   	console.log('What even');
@@ -147,7 +149,7 @@ app.get('/play', function(req, res){
 			console.log(rows1[0]);
 			var str = JSON.stringify(rows1[0]);
 			console.log("Whole " + str);
-			var answerWhole = str.split("\"");
+			//var answerWhole = str.split(" \" ");
 			
 			console.log("Whole " + answerWhole[3]);
 			//cpu = cpu + "|" + rows1[0].cat1String;
@@ -226,7 +228,7 @@ app.get('/play', function(req, res){
 		cpuanswers = cpu;
 		var comp = cpu.split("|");		
 		//send the data to Main
-		res.render('main.jade', {title: 'Guess the Word', value: val, letr: alpha.charAt(letter-1)});
+		res.render('main.jade', {title: 'Guess the Word', value: val, letr: alpha.charAt(letter-1), });
 	
 		///res.end(value1);
 	
