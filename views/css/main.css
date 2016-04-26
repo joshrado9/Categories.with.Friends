@@ -32,6 +32,11 @@
 	font-size: 24px; 
 	opacity: 0.8; 
 }
+.divider{
+    width:100px;
+    height:auto;
+    display:inline-block;
+}
 
 .word-area {
 	background-color:gray;

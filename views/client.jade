@@ -16,28 +16,28 @@ html(lang="en")
               tr()
               th(class="table-header" id="ans1") #{answer[0]}
               td() #{cpu[0]}   
-                if ( answer[0] != '' && (answer[0] != cpu[0] || cpu[0] == '') )
-                  td(class="scores" id="cpu1") Points!
+                if ( answer[0] != '' && (answer[0].toLowerCase() != cpu[0].toLowerCase() || cpu[0] == '') )
+                  td(class="scores" id="cpu1") +1
                 else
                   td(class="scores" id="cpu1") No Points!       
                 tr() 
               th(class="table-header" id="ans2") #{answer[1]}
-              td(id="cpu2") #{cpu[1]}                
-                if ( answer[1] != '' && (answer[0] != cpu[0] || cpu[0] == '') )
-                  td(class="scores" id="cpu2") Points!
+              td() #{cpu[1]}                
+                if ( answer[1] != '' && (answer[1].toLowerCase() != cpu[1].toLowerCase() || cpu[1] == '') )
+                  td(class="scores" id="cpu2") +1
                 else
                   td(class="scores" id="cpu2") No Points!       
                 tr()
               th(class="table-header" id="ans3") #{answer[2]}
-              td(id="cpu3") #{cpu[2]}             
-                if ( answer[2] != '' && (answer[0].toLowerCase() != cpu[0].toLowerCase() || cpu[0] == '') )
-                  td(class="scores" id="cpu3") Points!
+              td() #{cpu[2]}             
+                if ( answer[2] !== '' && (answer[2].toLowerCase() !== cpu[2].toLowerCase() || cpu[1] === '') )
+                  td(class="scores" id="cpu3") +1
                 else
                   td(class="scores" id="cpu3") No Points!       
                 tr()
-
-        
-
+              td()
+                td() 
+                td(class="scores" id="cpu3") total: #{total}
               
         
       div(style="padding-top:30px;")

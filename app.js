@@ -110,8 +110,9 @@ app.get('/check', function(req, res) {
 	var sendC = cpuanswers.split("|");
 	console.log(sendC[0]+" "+sendC[1]+" "+sendC[2]);
 	
-	//send a full string
-	res.render('client.jade', {answer: sends, cpu: sendC});
+	var score = 0;
+
+	res.render('client.jade', {answer: sends, cpu: sendC, total: score});
 	
 	
 	
@@ -119,8 +120,142 @@ app.get('/check', function(req, res) {
 
 //this is where will send the db data
 app.get('/hi', function(req, res) {
-	//res.render('hiscores.jade', {title: 'scores'});
-	res.send('HI there');
+	
+	
+	  
+	//TODO push highscore to db
+	  db.query("INSERT into hiscores (score) VALUES ",function (err, rows){
+	  	
+	  });
+	
+	
+	
+	//TODO do the play function
+	
+		//get random category
+	var high = 6;
+	var low = 1;
+	var cat1 = Math.floor(Math.random() * (high - low) + low);
+	
+	//generate a letter
+	var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	letter = Math.floor( Math.random() * 26) ;
+
+	var cat1String, cat2String, cat3String;
+	var value1 = "";
+	var cpu = "";
+	db.query('SELECT name FROM categories WHERE id = '+ cat1, function(err, rows)
+	{
+		cat1String = rows[0].name;
+		value1 = value1+rows[0].name;
+		console.log("Cat Query 1" + value1);
+
+		var query = "SELECT " + cat1String + " AS hello FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			var answerWhole = "";
+			answerWhole = rows1[0].hello.split(",");
+			
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			if (rn < answerWhole.length)
+			{
+				cpu = answerWhole[rn];
+			}
+			else 
+			{
+				cpu = "No Answer";
+			}
+			
+			cpuanswers = cpuanswers+cpu;
+			console.log("CPU Ans 1" + cpuanswers);
+		});
+		
+	});
+	
+	var cat2 = Math.floor(Math.random() * (high - low) + low);
+	while (cat2 == cat1)
+	{
+		console.log('cat2 loop');
+		cat2 = Math.floor(Math.random() * (high - low) + low);
+	}
+	db.query('SELECT name FROM categories WHERE id = '+cat2, function(err, rows)
+	{
+		cat2String = rows[0].name;
+		value1 = value1+"|"+ rows[0].name;
+		console.log("Cat Query 2" + value1);
+		
+		cpu ="";
+		
+		var query = "SELECT " + cat2String + " AS hello FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			var answerWhole;
+			answerWhole = rows1[0].hello.split(",");
+			
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			if (rn < answerWhole.length)
+			{
+				cpu = "|" + answerWhole[rn];
+			}
+			else 
+			{
+				cpu = "|No Answer";
+			}
+			
+			cpuanswers = cpuanswers+cpu;
+			console.log("CPU Ans 2" + cpuanswers);
+		});
+	});
+	
+	var cat3 = Math.floor(Math.random() * (high - low) + low);
+	while (cat3 == cat1 || cat3 == cat2)
+	{
+		console.log('cat3 loop');
+		cat3 = Math.floor(Math.random() * (high - low) + low);
+	}
+	db.query('SELECT name FROM categories WHERE id = '+cat3, function(err, rows)
+	{
+		value1 = value1+"|"+ rows[0].name;
+		cat3String = rows[0].name;
+		console.log("Cat Query 3" + value1);
+		
+		cpu ="";		
+		var query = "SELECT " + cat3String + " AS hello FROM word WHERE id = " + letter;
+		db.query(query, function(err1, rows1)
+		{
+			var answerWhole;
+			answerWhole = rows1[0].hello.split(",");
+			
+			var rng = answerWhole.length + 1;
+			var rn = Math.floor(Math.random() * (rng));
+			if (rn < answerWhole.length)
+			{
+				cpu = "|" + answerWhole[rn];
+			}
+			else 
+			{
+				cpu = "|No Answer";
+			}
+			cpuanswers = cpuanswers+cpu;
+			console.log("CPU Ans 3" + cpuanswers);
+		});		
+		//store the categories
+		categories= value1;
+		var val = value1.split("|");
+		
+		cpuanswers = cpu;
+		var comp = cpu.split("|");		
+		//send the data to Main
+		res.render('main.jade', {title: 'Categories w/ Friends', value: val, letr: alpha.charAt(letter-1) });
+	});
+	
+	
+	
+	
+	
 	
 });
 

@@ -9,6 +9,12 @@
 	display:none;
 }
 
+.divider1{
+    width:10px;
+    height:auto;
+    display:inline-block;
+}
+
 .divider{
     width:100px;
     height:auto;
