@@ -74,8 +74,7 @@ app.get('/check', function(req, res) {
 	//generate random number
 //	var index = Math.floor(Math.random()*25) + 1;
 	console.log(letter+"  "+cates[1]);
-
-//	db.query('SELECT fruits FROM word WHERE id = 1', function(err, rows)
+	//	db.query('SELECT fruits FROM word WHERE id = 1', function(err, rows)
 //	{
 //	
 //		console.log('stuff');
