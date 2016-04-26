@@ -50,6 +50,8 @@ app.get('/', function(req, res){
   	res.render('hiscores.jade', {title: ty});
   	console.log('What even');
 });
+//TODO add app.get('quit')
+
 
 //this is where will retrieve the db data
 app.get('/check', function(req, res) {
