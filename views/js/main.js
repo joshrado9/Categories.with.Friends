@@ -5,7 +5,7 @@ var time = 120;
 function submit() {
 	//alert("Submitted!");
 	var thing = document.getElementById("one").value;
-	document.getElementById("five").value = thing;
+	document.getElementById("four").value = thing;
 }
 
 var vari;
